@@ -1,42 +1,34 @@
-from flask import Flask
+from flask import Flask, jsonify
 
-
-# If `entrypoint` is not defined in app.yaml, App Engine will look for an app
-# called `app` in `main.py`.
 app = Flask(__name__)
-
 
 @app.route('/')
 def hello():
     """Return a friendly HTTP greeting."""
-    # Program to multiply two matrices using nested loops
+    # Matrix A: 2x3
+    A = [[1, 2, 3],
+         [4, 5, 6]]
 
-    # 3x3 matrix
-    X = [[12,7,3],
-        [4 ,5,6],
-        [7 ,8,9]]
-    # 3x4 matrix
-    Y = [[5,8,1,2],
-        [6,7,3,0],
-        [4,5,9,1]]
-    # result is 3x4
-    result = [[0,0,0,0],
-              [0,0,0,0],
-              [0,0,0,0]]
+    # Matrix B: 3x2
+    B = [[7, 8],
+         [9, 10],
+         [11, 12]]
 
-    # iterate through rows of X
-    for i in range(len(X)):
-     # iterate through columns of Y
-     for j in range(len(Y[0])):
-       # iterate through rows of Y
-       for k in range(len(Y)):
-           result[i][j] += X[i][k] * Y[k][j]
+    # Result matrix: 2x2
+    result = [[0, 0],
+              [0, 0]]
 
-    return result
+    # Matrix multiplication
+    for i in range(len(A)):
+        for j in range(len(B[0])):
+            for k in range(len(B)):
+                result[i][j] += A[i][k] * B[k][j]
 
+    # Convert the matrix to a list of lists
+    result_list = [list(row) for row in result]
+
+    # Return the matrix as JSON
+    return jsonify(result=result_list)
 
 if __name__ == '__main__':
-    # This is used when running locally only. When deploying to Google App
-    # Engine, a webserver process such as Gunicorn will serve the app. You
-    # can configure startup instructions by adding `entrypoint` to app.yaml.
     app.run(host='127.0.0.1', port=8080, debug=True)
