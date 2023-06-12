@@ -10,11 +10,11 @@ app = Flask(__name__)
 def hello():
     
     # List of Integers
-    numbers = [12, 33, 44, 17,37,48,60,58]
+    numbers = [14, 31, 24, 17,37,48,60,85]
  
     #Sorting list of Integers
     numbers.sort(reverse=True)
-    return "Second largest number :"+ str(numbers[1])
+    return "Third largest number :"+ str(numbers[2])
 
 
 if __name__ == '__main__':
